@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Summarize</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <header>
+      <h1>Summarize</h1>
+    </header>
+    <div class="box">
+      <h2>Instructions:</h2>
+		<p>Read the original article and the summaries A, B, C and D.</p>
+		<p>Rank these summaries based on which summary you think is the <b>best (Rank 1)</b> to <b>worst (Rank 4)</b>, based on content and readability.</p>
+		<p>After ranking each summary, <b>rate the summary that you rank as rank 1</b>, from <b>1 (worst)</b> to <b>5 (best)</b>.</p>
+		<p>Upon submission, you can return to this web page and repeat this for as many articles as you like. Any feedback is much appreciated.</p>
+    </div>
+    <div class="box">
+      <h2>Original Article</h2>
+	  <p>{{ box1_text }}</p>
+    </div>
+    <div class="box">
+      <h2>Summary A</h2>
+      <p>{{ box2_text }}</p>
+      <input type="hidden" name="A" value="{{ values['A'] }}">    </div>
+    <div class="box">
+      <h2>Summary B</h2>
+      <p>{{ box3_text }}</p>
+      <input type="hidden" name="B" value="{{ values['B'] }}">    </div>
+    <div class="box">
+      <h2>Summary C</h2>
+      <p>{{ box4_text }}</p>
+      <input type="hidden" name="C" value="{{ values['C'] }}">    </div>
+    <div class="box">
+      <h2>Summary D</h2>
+      <p>{{ box5_text }}</p>
+      <input type="hidden" name="D" value="{{ values['D'] }}">    </div>    </div>
+    <br>
+    <div class="survey-form-header">
+    </div>
+    <div class="survey-form-container">
+      <form id="my-form" method="POST" action="{{ url_for('submit') }}" onsubmit="return validateForm()">
+        <input type="hidden" name="values" value="{{ values }}">
+		<input type="hidden" name="x" value="{{ x }}">
+        <p style="font-family: 'Orbitron', sans-serif; font-size: 24px;" ><b>Rank Each Summary:</b></p>
+        <br>
+        <label for="rank1" style="font-family: 'Orbitron', sans-serif;font-size: 18px;">Rank 1:</label>
+        <select id="rank1" name="rank1">
+          {% for option_value, value in {'A': box2_text, 'B': box3_text, 'C': box4_text, 'D': box5_text}.items() %}
+            <option value="{{ value }}">{{ option_value }}</option>
+          {% endfor %}
+        </select>
+	
+        <br>
+        <label for="rank2" style="font-family: 'Orbitron', sans-serif;font-size: 18px;">Rank 2:</label>
+        <select id="rank2" name="rank2">
+          {% for option_value, value in {'A': box2_text, 'B': box3_text, 'C': box4_text, 'D': box5_text}.items() %}
+            <option value="{{ value }}">{{ option_value }}</option>
+          {% endfor %}
+        </select>
+
+        <br>
+        <label for="rank3" style="font-family: 'Orbitron', sans-serif;font-size: 18px;">Rank 3:</label>
+        <select id="rank3" name="rank3">
+          {% for option_value, value in {'A': box2_text, 'B': box3_text, 'C': box4_text, 'D': box5_text}.items() %}
+            <option value="{{ value }}">{{ option_value }}</option>
+          {% endfor %}
+        </select>
+
+        <br>
+        <label for="rank4" style="font-family: 'Orbitron', sans-serif;font-size: 18px;">Rank 4:</label>
+        <select id="rank4" name="rank4">
+          {% for option_value, value in {'A': box2_text, 'B': box3_text, 'C': box4_text, 'D': box5_text}.items() %}
+            <option value="{{ value }}">{{ option_value }}</option>
+          {% endfor %}
+        </select>
+        <p style="font-family: 'Orbitron', sans-serif; font-size: 24px;" ><b>Rate the highest-ranked summary:</b></p>
+		<input type="radio" id="1" name="rating" value="1">
+		<label for="1">1</label><br>
+		<input type="radio" id="2" name="rating" value="2">
+		<label for="2">2</label><br>
+		<input type="radio" id="3" name="rating" value="3">
+		<label for="3">3</label><br>
+		<input type="radio" id="4" name="rating" value="4">
+		<label for="4">4</label><br>
+		<input type="radio" id="5" name="rating" value="5">
+		<label for="5">5</label><br>
+        <br>
+        <br>
+        <label for="feedback" style="font-family: 'Orbitron', sans-serif; font-size: 24px;"><b>Feedback:</b></label>
+        <textarea id="feedback" name="feedback"></textarea>
+        <br>
+        <input type="submit" value="Submit" style="font-family: 'Orbitron', sans-serif; font-size: 24px;">
+      </form>
+    </div>
+  <script>
+    const form = document.querySelector('#my-form');
+    form.addEventListener('submit', function(event) {
+    const rank1 = document.querySelector('#rank1').value;
+    const rank2 = document.querySelector('#rank2').value;
+    const rank3 = document.querySelector('#rank3').value;
+    if (rank1 === rank2 || rank1 === rank3 || rank2 === rank3) {
+      event.preventDefault();
+      alert('Please ensure that no two ranking boxes have the same value.');
+    }
+  });
+  </script>
+  <script>
+  function validateForm() {
+    var radios = document.getElementsByName('rating');
+    var formValid = false;
+
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked) {
+        formValid = true;
+        break;
+      }
+    }
+
+    if (!formValid) {
+      alert('Please select a rating.');
+      return false;
+    }
+  }
+</script>
+  </body>
+</html>

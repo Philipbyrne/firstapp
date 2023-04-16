@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Thank You!</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_thankyou.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="font-family: 'Orbitron', sans-serif;font-size: 28px;">Thank you for your submission!</h1>
+      <p>It would be much appreciated if you rated another set of summaries!</p>
+      <a href="{{ url_for('home') }}">Rate Some More!</a>
+    </div>
+  </body>
+</html>
